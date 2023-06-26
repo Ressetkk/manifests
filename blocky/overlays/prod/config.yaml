@@ -1,0 +1,27 @@
+upstream:
+  default:
+    - tcp-tls:1.1.1.1:853
+    - tcp-tls:1.0.0.1:853
+blocking:
+  blackLists:
+    ads:
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+      - http://sysctl.org/cameleon/hosts
+      - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+    special:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts
+  clientGroupsBlock:
+    default:
+      - ads
+prometheus:
+  enable: true
+  path: /metrics
+ports:
+  dns: 53
+  http: 4000
+  # https: 443
+customDNS:
+  mapping:
+    home: 192.168.100.240
+    dvr: 192.168.100.240
