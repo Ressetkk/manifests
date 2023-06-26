@@ -1,0 +1,9 @@
+namespace: dvr
+resources:
+  - ../../base
+  - ingress.yaml
+patches:
+  - path: statefulset_patch.yaml
+    target:
+      kind: StatefulSet
+      name: radarr
