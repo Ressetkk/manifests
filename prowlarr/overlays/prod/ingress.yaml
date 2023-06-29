@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prowlarr-int
+spec:
+  rules:
+  - host: prowlarr.dvr
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: prowlarr-svc
+            port: 
+              number: 9696

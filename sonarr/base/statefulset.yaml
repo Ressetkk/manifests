@@ -19,6 +19,9 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /config
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
   volumeClaimTemplates:
   - metadata:
       name: config
