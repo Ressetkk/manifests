@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sonarr
+spec:
+  template:
+    spec:
+      containers:
+        - name: sonarr
+          volumeMounts:
+            - name: plex-nfs
+              mountPath: /plex
+      volumes:
+        - name: plex-nfs
+          nfs:
+            server: 192.168.100.31
+            path: /mnt/user/plex
+  volumeClaimTemplates:
+  - metadata:
+      name: config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
