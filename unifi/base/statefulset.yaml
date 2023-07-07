@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: unifi
+spec:
+  selector:
+    matchLabels:
+      app: unifi
+  serviceName: unifi-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: unifi
+    spec:
+      containers:
+      - name: unifi
+        image: linuxserver/unifi-controller:latest
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: Europe/Warsaw
+        ports:
+        - containerPort: 8443
+          name: tls
+          protocol: TCP
+        - containerPort: 3478
+          protocol: UDP
+          name: stun
+        - containerPort: 10001
+          protocol: UDP
+          name: ap-discovery
+        - containerPort: 8080
+          protocol: TCP
+          name: inform
+        - containerPort: 1900
+          protocol: UDP
+          name: l2-discover
+        - containerPort: 8843
+          protocol: TCP
+          name: guest-tls
+        - containerPort: 8880
+          protocol: TCP
+          name: guest
+        - containerPort: 6789
+          protocol: TCP
+          name: mobile-test
+        - containerPort: 5514
+          protocol: UDP
+          name: rsyslog
+        volumeMounts:
+        - name: data
+          mountPath: /config
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

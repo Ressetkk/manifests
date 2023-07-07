@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: unifi
+spec:
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      storageClassName: longhorn
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi

@@ -1,0 +1,18 @@
+resources:
+- ../../base
+nameSuffix: -default
+namespace: unifi-system
+images:
+- name: linuxserver/unifi-controller
+  newTag: 7.4.162
+commonLabels:
+  app: unifi
+patches:
+  - path: statefulset_patch.yaml
+    target:
+      kind: StatefulSet
+      name: unifi
+  - path: metallb_patch.yaml
+    target:
+      kind: Service
+      name: unifi-ports
